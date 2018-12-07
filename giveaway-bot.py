@@ -1,9 +1,9 @@
-import tweepy, time, datetime
+import tweepy, time
 
 consumer_key = "bQDnixR5ylKP9BmmRgcAIhEZR"
 consumer_secret = "NK6MReRROxR9g7RZngfzQdjL2HllyLsFs18o8BPbqp0rMKZbvV"
-access_token = "1022913483531329538-HulI8TPquoPqdpbNaWuzpzkAxwFkzk"
-access_token_secret = "QsbgUflXJOoFcV3wbidSL6osO1rhcb5Zd0jqERH0D51z4"
+access_token = "1022913483531329538-ktUsnS5Z7dyWKGcZCmafHh555BateO"
+access_token_secret = "iOZTs06fdZULD0sTm89YFvSlaCkT1UrgfUnnkowJSN6Rn"
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
@@ -15,6 +15,22 @@ print(user.name)
 def main():
     while True:
         print (time.asctime(time.localtime(time.time())) + " ---------- STARTING ITERATION... ----------")
+
+        # Unfollow if Exceeded Friends Limit
+        friendsLimit = 5000
+        followerCount = user.followers_count
+
+        if followerCount > 5000:
+            friendsLimit = int(followerCount * 1.1)
+
+        friendsLimit -= 50
+
+        if user.friends_count > friendsLimit:
+            print("Friend Limit Exceeded, Unfollowing...")
+            for friend in tweepy.Cursor(api.friends_ids).items():
+                api.destroy_friendship(friend)
+            print("Successfully Unfollowed All Friends!")
+
         numberOfTweets = 9
         timeUntilNextBatch = 360
         for tweet in tweepy.Cursor(api.search, "giveaway retweet -filter:retweets").items(numberOfTweets):
@@ -35,6 +51,7 @@ def main():
                 print(time.asctime(time.localtime(time.time())) + " " + e.reason)
             except StopIteration:
                 break
+
         print(time.asctime(time.localtime(time.time())) + " ---------- ITERATION SUCCESSFUL ----------")
         time.sleep(timeUntilNextBatch)
 
