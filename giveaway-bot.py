@@ -2,8 +2,8 @@ import tweepy, time
 
 consumer_key = "bQDnixR5ylKP9BmmRgcAIhEZR"
 consumer_secret = "NK6MReRROxR9g7RZngfzQdjL2HllyLsFs18o8BPbqp0rMKZbvV"
-access_token = "1022913483531329538-U3WpSxyScVDBzypNpJYslpt6tSMZuC"
-access_token_secret = "ZZARmqNRWQ00BzqHomKIeIFXlPEKWjj1C8tqmJyZdewEh"
+access_token = "1022913483531329538-YZQ6R6VP7Bl83qxXjuP9OWim60Jriq"
+access_token_secret = "ZCMaN1ZUQsbF4Fm8RWUqpYjqzP6CVkqOSNS2nZzG4xmww"
 
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
@@ -31,8 +31,14 @@ def main():
         
         if friendsCount > friendsLimit:
             print(time.asctime(time.localtime(time.time())) + " Friend Limit Exceeded, Unfollowing...")
+            int i = 0
             for friend in tweepy.Cursor(api.friends_ids).items():
                 api.destroy_friendship(friend)
+                i += 1
+                if i == 5:
+                    i = 0
+                    time.sleep(60)
+                    
             print(time.asctime(time.localtime(time.time())) + " Successfully Unfollowed All Friends!")
 
         numberOfTweets = 9
