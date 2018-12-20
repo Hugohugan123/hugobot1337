@@ -26,8 +26,8 @@ def main():
         friendsLimit -= 50
         friendsCount = user.friends_count
         
-        print(time.asctime(time.localtime(time.time())) + " " + str(friendsCount))
-        print(time.asctime(time.localtime(time.time())) + " " + str(friendsLimit))
+        print(time.asctime(time.localtime(time.time())) + " Following: " + str(friendsCount))
+        print(time.asctime(time.localtime(time.time())) + " Follow Limit: " + str(friendsLimit))
         
         if friendsCount > friendsLimit:
             print(time.asctime(time.localtime(time.time())) + " Friend Limit Exceeded, Unfollowing...")
