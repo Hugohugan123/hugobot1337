@@ -24,12 +24,16 @@ def main():
             friendsLimit = int(followerCount * 1.1)
 
         friendsLimit -= 50
-
-        if user.friends_count > friendsLimit:
-            print("Friend Limit Exceeded, Unfollowing...")
+        friendsCount = user.friends_count
+        
+        print(time.asctime(time.localtime(time.time())) + " " + friendsCount)
+        print(time.asctime(time.localtime(time.time())) + " " + friendsLimit)
+        
+        if friendsCount > friendsLimit:
+            print(time.asctime(time.localtime(time.time())) + " Friend Limit Exceeded, Unfollowing...")
             for friend in tweepy.Cursor(api.friends_ids).items():
                 api.destroy_friendship(friend)
-            print("Successfully Unfollowed All Friends!")
+            print(time.asctime(time.localtime(time.time())) + " Successfully Unfollowed All Friends!")
 
         numberOfTweets = 9
         timeUntilNextBatch = 360
