@@ -31,7 +31,7 @@ def main():
         
         if friendsCount > friendsLimit:
             print(time.asctime(time.localtime(time.time())) + " Friend Limit Exceeded, Unfollowing...")
-            int i = 0
+            i = 0
             for friend in tweepy.Cursor(api.friends_ids).items():
                 api.destroy_friendship(friend)
                 i += 1
